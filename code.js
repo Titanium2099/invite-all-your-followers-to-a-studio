@@ -1,4 +1,6 @@
-javascript:x=document.createElement("script");x.src="//ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"; void document.getElementsByTagName("head")[0].appendChild(x);
+x = document.createElement("script");
+x.src = "//ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js";
+void document.getElementsByTagName("head")[0].appendChild(x);
 
 
 var User = document.getElementsByClassName('ignore-react-onclickoutside user-info')[0].children[1].textContent;
@@ -35,11 +37,10 @@ function getData() {
           var $out = $('#result');
           for (var i = 0; i < $users.length; i += 1) {
             var user = $users[i].text.trim();
-            console.log(user);
             followers.push(user)
           }
           page += 1;
-          console.log(followers);
+          document.getElementById('console').innerHTML = 'loaded page ' + page;
           getData()
         },
         error: function(jqXHR, textStatus, errorThrown) {
@@ -63,6 +64,8 @@ function getData() {
         success: function() {
           if ((Numbersend + NumStart) < followers.length) {
             Numbersend += 1;
+            document.getElementById('console').innerHTML = 'sent to(' + Numbersend + ' out of ' + followers.length + ')';
+
             console.log(Numbersend + NumStart);
             setTimeout(() => getData(), 1000)
           } else {
@@ -72,7 +75,7 @@ function getData() {
         error: function() {
           if ((Numbersend + NumStart) < followers.length) {
             Numbersend += 1;
-            console.log(Numbersend + NumStart);
+            document.getElementById('console').innerHTML = 'sent to(' + Numbersend + ' out of ' + followers.length + ')';
             setTimeout(() => getData(), 1000)
           } else {
             alert("Done!")
@@ -92,7 +95,8 @@ function getData() {
 var StudioNum = location.pathname;
 StudioNum = StudioNum.slice(9, 17);
 if (parseInt(StudioNum)) {
-  getData()
+  document.body.innerHTML = "<div id='console' style='color:#fff;font-family: Arial;'></div>";
+  getData();
 } else {
   alert('Please Run This Script In The Studio That You Want To Send Your Invites In.');
 }
